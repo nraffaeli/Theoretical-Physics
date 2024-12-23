@@ -48,14 +48,14 @@ B(x, y) = \int_{0}^{1} t^{x-1} (1-t)^{y-1} \, dt
     \]
 \end{itemize}
 
-section{Riemann Zeta Function and Polylogarithm}
+\section{Riemann Zeta Function and Polylogarithm}
 \paragraph{Riemann Zeta Function.}
 \[
-\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s} \quad \text{for } \Re(s) > 1
+\zeta(s) = \frac{1}{\Gamma(s)} \int_{0}^{\infty} \frac{t^{s-1}}{e^t - 1} \, dt \quad \text{for } \Re(s) > 1
 \]
 \paragraph{Polylogarithm Function.}
 \[
-\text{Li}_s(z) = \sum_{n=1}^{\infty} \frac{z^n}{n^s}
+\text{Li}_s(z) = \frac{z}{\Gamma(s)} \int_0^\infty \frac{t^{s-1}}{e^t/z - 1} \, dt \quad \text{for } \Re(s) > 0, \ |z| < 1
 \]
 \paragraph{Special Values.}
 \begin{itemize}
@@ -65,7 +65,11 @@ section{Riemann Zeta Function and Polylogarithm}
     \]
     \item 
     \[
-    \zeta(2n) = (-1)^{n+1} \frac{B_{2n} (2\pi)^{2n}}{2 (2n)!}
+    \zeta(s) = \sum^\infty_{n = 0} = \frac{1}{n^s}
+    \]
+    \item 
+    \[
+    \text{Li}_s(z) = \sum^\infty_{m = 0} \frac{z^m}{m^s}
     \]
     \item 
     \[
@@ -74,6 +78,10 @@ section{Riemann Zeta Function and Polylogarithm}
     \item 
     \[
     \text{Li}_2(z) = -\int_0^z \frac{\ln(1-t)}{t} \, dt
+    \]
+    \item 
+    \[
+    \text{Li}_s(1) = \zeta(s)
     \]
 \end{itemize}
 
