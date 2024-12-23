@@ -48,6 +48,35 @@ B(x, y) = \int_{0}^{1} t^{x-1} (1-t)^{y-1} \, dt
     \]
 \end{itemize}
 
+section{Riemann Zeta Function and Polylogarithm}
+\paragraph{Riemann Zeta Function.}
+\[
+\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s} \quad \text{for } \Re(s) > 1
+\]
+\paragraph{Polylogarithm Function.}
+\[
+\text{Li}_s(z) = \sum_{n=1}^{\infty} \frac{z^n}{n^s}
+\]
+\paragraph{Special Values.}
+\begin{itemize}
+    \item 
+    \[
+    \zeta(2) = \frac{\pi^2}{6}, \quad \zeta(4) = \frac{\pi^4}{90}
+    \]
+    \item 
+    \[
+    \zeta(2n) = (-1)^{n+1} \frac{B_{2n} (2\pi)^{2n}}{2 (2n)!}
+    \]
+    \item 
+    \[
+    \text{Li}_1(z) = -\ln(1-z)
+    \]
+    \item 
+    \[
+    \text{Li}_2(z) = -\int_0^z \frac{\ln(1-t)}{t} \, dt
+    \]
+\end{itemize}
+
 \section{Usefull Limit}
 \paragraph{Stirling Formula.}
 \[
