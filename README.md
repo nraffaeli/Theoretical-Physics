@@ -1,7 +1,7 @@
 # Theoretical Physics
 
 ## Overview
-This repository contains various resources, notes, and code related to theoretical physics. It is intended to serve as a comprehensive guide for students and researchers in the field.
+This repository contains various resources, notes, and code related to theoretical physics. It is intended to serve as a comprehensive guide.
 
 ## Contents
 - **Lecture Notes:** Detailed notes from various theoretical physics lectures.
