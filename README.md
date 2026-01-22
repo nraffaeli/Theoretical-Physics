@@ -8,8 +8,3 @@ This repository contains various resources, notes, and code related to theoretic
 - **Research Papers:** Links and summaries of important research papers.
 - **Code:** Scripts and programs for simulations and calculations in theoretical physics.
 - **LaTeX Files:** Templates and examples for writing papers and reports in LaTeX.
-
-## Getting Started
-To get started with the materials in this repository, clone the repository using the following command:
-```bash
-git clone https://github.com/nraffaeli/Theoretical-Physiscs.git
