@@ -1,0 +1,169 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\usepackage{hyperref}
+\geometry{a4paper, margin=1in}
+
+\title{Notes on Gauge Theories}
+\author{Nicolò Raffaeli}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\paragraph{Gauge Principle.} \textit{The gauge principle states that the fundamental interactions of nature can be understood as resulting from the requirement of local invariance under some symmetry group.}
+\\
+\\
+Consider the pedagogical example: \\
+
+\textbf{Global Symmetry.} Consider a complex scalar field \( \phi(x) \) with Lagrangian:
+\[
+\mathcal{L} = \partial_\mu \phi^* \partial^\mu \phi - m^2 \phi^* \phi
+\]
+This is invariant under the global \( U(1) \) transformation:
+\[
+\phi(x) \rightarrow e^{i\alpha} \phi(x), \quad \alpha \in \mathbb{R}
+\]
+
+\textbf{Local Symmetry.} If we promote \( \alpha \rightarrow \alpha(x) \), the Lagrangian is no longer invariant:
+\[
+\partial_\mu \phi(x) \rightarrow e^{i\alpha(x)}\left[\partial_\mu \phi(x) + i (\partial_\mu \alpha) \phi(x)\right]
+\]
+To restore invariance, introduce a gauge field \( A_\mu(x) \) and define the covariant derivative:
+\[
+A_\mu \longrightarrow A_\mu + \partial_\mu \alpha
+\]
+\[
+D_\mu \phi = (\partial_\mu + i A_\mu) \phi
+\]
+
+\paragraph{Note.} The symmetry depends on a rescale of the function \(\alpha(x)\) by any factor \(g\). This is the \textbf{coupling constant}, and indeed became an experimental parameter in the theory once we start considering the interaction terms. For the theoretical basis this constant will be fixed to one for simplicity reason, and restored in specific theories whenever is needed.
+
+\section*{Gauge Transformations}
+The gauge group is a Lie group \( G \), such as \( SU(N) \). Let \( U(x) \in G \) be a unitary gauge transformation; we could write it in terms of the generator of the group \(T\) in a given representation. Then under:
+\[
+\psi(x) \rightarrow U(x)\psi(x) 
+\]
+\[
+A_\mu(x) \rightarrow U(x)A_\mu(x)U^{-1}(x) - (\partial_\mu U(x)) U^{-1}(x)
+\]
+Both the field strength tensor \( F_{\mu\nu} \) and the derivative (now called the \textbf{covariant derivative}) \( D_\mu \psi \) transform covariantly.
+
+\subsubsection*{Covariant Derivative}
+As we have explained in the starting example, we want the full Lagrangian of the field theory to be gauge-invariant, and this could be done by changing the derivative into the covariant derivative:
+\[
+\partial_\mu \longrightarrow D_\mu = \partial_\mu + iA_\mu 
+\]
+
+\subsubsection*{Gauge Field Dynamics}
+
+To describe the dynamics of the gauge field, define the field strength tensor:
+\begin{align*}
+    F_{\mu\nu} &= i \left[D_\mu, D_\nu\right]\\
+    &= \partial_\mu A_\nu - \partial_\nu A_\mu - i\left[ A_\mu, A_\nu \right]
+\end{align*}
+Taking the starting case, the gauge-invariant Lagrangian is then:
+\[
+\mathcal{L} = -\frac{1}{4} F_{\mu\nu} F^{\mu\nu} + |D_\mu \phi|^2 - m^2 |\phi|^2
+\]
+From which we can now compute the equation of motion due to Hamilton principle.
+\[ 
+\partial_\mu\frac{\partial \mathcal{L}}{\partial(\partial_\mu A_\nu)} - \frac{\partial \mathcal{L}}{\partial A_\nu} = 0
+\] 
+In vacuum: 
+\[
+\partial_\mu F^{\mu\nu} = 0
+\]
+In presence of matter (\(\phi\) terms to be considered):
+\[
+\partial_\mu F^{\mu\nu} = i \left[ \phi^* \partial^\nu \phi - \phi (\partial^\nu \phi)^* \right]
+\]
+Such \(J^\mu\) is a conserved current, which is interpreted as an interaction. 
+\subsubsection*{Conserved Currents}
+
+Even though local gauge symmetries do not lead to conserved Noether currents in the usual sense (due to redundancy), global subgroups do. For example, the electric current for a theory of \( U(1) \) is:
+\[
+J^\mu = i \left[ \phi^* D^\mu \phi - \phi (D^\mu \phi)^* \right]
+\]
+which is conserved: \( \partial_\mu J^\mu = 0 \). This leads to a conserved quantity called the \textbf{ gauge charge}. 
+
+\section*{Abelian and Non-Abelian Gauge Theories}
+In gauge theories, the fields transform under representations of \( G \), and the gauge fields \( A_\mu = A_\mu^a t^a \) take values in the Lie algebra of \( G \), so canonically the fields of gauges are supposed to be in the adjoint representation. 
+
+An element of the Lie group \(U(x)\) could be expressed as:
+\[
+U(x) = \exp[i t^a \theta^a(x)]
+\]
+with \(t^a\) the generators of the group in the Lie algebra for a given representation. Lie algebra is defined through the following commutative relation:
+\[
+\left[t^a, t^b \right] = if^{abc} t_c
+\]
+where \(f^{abc}\) is called \textbf{structure constant}. So as one could understand evrything depends on wich reppresentation we are considering. Let's call \(R\) an irreducible reppresentation, other reppresentation that are reducibile could be linked to result from reducible one. 
+For every \(R\) we define two important quantity; the Dinkin index \(D(R)\):
+\[
+D(R) \delta^{ab}= tr(t_R^at_R^b)
+\]
+And the Casimir Operator \(C(R)\), for given reppresentation generators are \((t^a)_{ij}\):
+\[
+C(R)\delta_{ij} = (t^a)_{ik}(t^a)_{kj} = [t_R^at_R^a)]_{ij} 
+\]
+Observe that:
+\[
+tr(t^a_Rt^b_R\delta^{ab}) = C(R)\dim(R) 
+\]
+\[
+\delta^{ab} tr(t^a_Rt^b_R) = \delta^{ab}D(R)\dim(G)
+\]
+\[ C(R)\dim(R) = D(R) \dim(G)
+\]
+
+\paragraph{def. (Reppresentation) }
+
+Three irreducible reppresentation are very important:
+\begin{enumerate}
+    \item Fondamental (F): The vector space V has \(\dim(V) = \dim \)
+    \item Anti-fondamental (\(\bar{F}\)): it cames out that group such SU(N) have a anti reppresentation of the same dimension. This provides the fact that we have complex field.
+    \item Adjoint (A): V has \(\dim(V) = \dim(G)\) for wich one could derive the following property:
+    \[
+    C(A) = D(R)
+    \]
+\end{enumerate}
+
+\paragraph{Abelian.} In the abelian case evrything is very simple: the structure constant is zero, the Dinkin index is zero and also the Casimir operator is zero. Only one gauge field is needed and no groupology is importnat.
+
+\textbf{Covariant Derivative:}
+\[
+D_\mu = \partial_\mu + i g A_\mu^a t^a
+\]
+
+\textbf{Field Strength Tensor:}
+\[
+F_{\mu\nu}^a = \partial_\mu A_\nu^a - \partial_\nu A_\mu^a + g f^{abc} A_\mu^b A_\nu^c
+\]
+
+\textbf{Lagrangian:}
+\[
+\mathcal{L} = -\frac{1}{4} F_{\mu\nu}^a F^{a\,\mu\nu} + \bar{\psi_j}(i\gamma^\mu (D_\mu)_{jk} - m)\psi_k
+\]
+
+\section*{Examples}
+
+\subsection*{QED (Quantum Electrodynamics)}
+
+Gauge group: \( U(1) \) \\
+Matter: Dirac spinor \( \psi \) \\
+Gauge field: \( A_\mu \) \\
+\[
+\mathcal{L} = -\frac{1}{4} F_{\mu\nu}F^{\mu\nu} + \bar{\psi}(i\gamma^\mu D_\mu - m)\psi
+\]
+
+\subsection*{QCD (Quantum Chromodynamics)}
+
+Gauge group: \( SU(3) \) \\
+Matter: quarks (triplets) \\
+Gauge field: gluons (octet) \\
+\[
+\mathcal{L} = -\frac{1}{4} F_{\mu\nu}^a F^{a\,\mu\nu} + \sum_f \bar{q}_f(i\gamma^\mu D_\mu - m_f)q_f
+\]
+\end{document}
