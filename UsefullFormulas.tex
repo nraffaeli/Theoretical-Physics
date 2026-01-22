@@ -1,11 +1,80 @@
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{slashed}
+\usepackage{makeidx} 
+\usepackage{makeidx} 
+
+\title{Useful Formulas for Theoretical Physics}
+\date{\today}
 
 \begin{document}
-\title{Usefull Formulas for Theoretical Physics}
-\date{\today}
 \maketitle
+\vspace{3cm}
+\tableofcontents
 
+\newpage
+
+\section{Gaussian Integral}
+
+\paragraph{Gaussian Integral.} 
+\[
+\int_{-\infty}^{\infty} dx \, \exp \left[ -ax^2 + bx \right] = \sqrt{\frac{\pi}{a}} e^{\frac{b}{4a}}
+\]
+
+\paragraph{Multidimensional Gaussian Integral.}
+\[
+     \int \prod_{i= 1}^N dx_i \exp{\left[-a_1x_1^2- a_2x_2^2 - \cdots + b_1x_1 + b_2x_2 + \cdots\right]} = \frac{\pi^{N/2}}{a_1^{1/2} a_2^{1/2}\cdots} e^{\frac{b_1^2}{4a_1}\frac{b_1^2}{4a_1}\cdots}
+\]
+That we can generalize considering a matrix of coefficient diagonal or diagonalizable:
+\[
+A =
+\begin{bmatrix}
+a_1 & 0 & 0 & \cdots & 0 \\
+0 & a_2 & 0 & \cdots & 0 \\
+0 & 0 & a_3 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & 0 & \cdots & a_N
+\end{bmatrix}
+\]
+So the most general formula:
+\[
+\int\prod_{i=1}^N dx_i \, \exp\left[ -\mathbf{x}^TA\mathbf{x} + \mathbf{b}\cdot\mathbf{x} \right] = \frac{\pi^{N/2}}{(\det A)^{1/2}} e^{\frac{1}{4}\mathbf{b}^T A^{-1} \mathbf{b}}
+\]
+The formula can be used also in complex integral calculation:
+\[
+\int \prod_{i = 1}^N dz_i d\bar{z}_i \, \exp \left[- \bar{\mathbf{z}} A \mathbf{z} + \bar{\mathbf{b}}\cdot\mathbf{z} + \mathbf{b}\cdot\bar{\mathbf{z}}\right] = \frac{\pi^N}{\det A} e^{\frac{1}{4}\bar{\mathbf{b}} A^{-1}\mathbf{b}}
+\]
+where \(A\) is an Hermitian matrix.
+
+For Grassmanian varible \(\theta_i\):
+\[
+\int d\theta_nd\theta_{n-1}\cdots d\theta_1 \exp{[-\theta_iA_{ij}\theta_j]}= \sqrt{\det[A]}
+\]
+And for complex Grassmanian:
+\[
+\int d\bar\theta_nd\bar\theta_{n-1}\cdots d\bar\theta_1d\theta_nd\theta_{n-1}\cdots d\theta_1\exp{[-\bar\theta_iA_{ij}\theta_j]}  = \det{A}
+\]
+Ordeer metter in an anticommuting algebra.
+
+\paragraph{Properties.}
+\begin{itemize}
+    \item 
+    \begin{align*}
+    \langle x_i \rangle &=   \int\prod_{i=1}^N dx_i \, \exp\left[ -\mathbf{x}^TA\mathbf{x} + \mathbf{b}\cdot\mathbf{x} \right] x_i \\
+    &= \frac{\partial}{\partial b_i} \int\prod_{i=1}^N dx_i \, \exp\left[ -\mathbf{x}^TA\mathbf{x} + \mathbf{b}\cdot\mathbf{x} \right] \\
+    &= \frac{\pi^{N/2}}{(\det A)^{1/2}} \frac{\partial}{\partial b_i} e^{\frac{1}{4}\mathbf{b}^T A \mathbf{b}} \\
+    &= \frac{\pi^{N/2}}{(\det A)^{1/2}} e^{\frac{1}{4}\mathbf{b}^T A \mathbf{b}} \cdot \frac{b_i}{2 a_i}     
+    \end{align*}
+    \item 
+    \begin{align*}
+        \langle x_i^{(l)}\rangle &= \frac{\partial^l}{\partial b_i^l} \int\prod_{i=1}^N dx_i \, \exp\left[ -\mathbf{x}^TA\mathbf{x} + \mathbf{b}\cdot\mathbf{x} \right]  \\
+        &= 
+        \begin{cases}
+           0 \quad\quad\quad  \text{If } l = \text{even} \\
+           \frac{\pi^{N/2}}{(\det A)^{1/2}} e^{\frac{1}{4}\mathbf{b}^T A \mathbf{b}} \cdot \sum_l\frac{b_i}{2 a_i} 
+        \end{cases}
+    \end{align*}
+\end{itemize}
 
 \section{Euler Integral}
 \paragraph{Euler Gamma Function.}
@@ -46,6 +115,10 @@ B(x, y) = \int_{0}^{1} t^{x-1} (1-t)^{y-1} \, dt
     \[
     B(x, y) = \frac{1}{x \binom{x+y-1}{x}}
     \]
+    \item 
+    \[
+    \int_0^\infty dx \, \frac{x^{m-1}}{(x+a)^n} = \frac{1}{a^{n-m}} \frac{\Gamma(m)\Gamma(n-m)}{\Gamma(n)}
+    \]
 \end{itemize}
 
 \section{Riemann Zeta Function and Polylogarithm}
@@ -85,17 +158,55 @@ B(x, y) = \int_{0}^{1} t^{x-1} (1-t)^{y-1} \, dt
     \]
 \end{itemize}
 
-\section{Usefull Limit}
+\section{Useful Limit}
 \paragraph{Stirling Formula.}
 \[
 x! \approx x^{x} e^{-x} \quad\quad\quad \text{for } x \longrightarrow \infty 
 \]
 
+\section{Useful Integral}
+\paragraph{Spherical Integral.}
+\[
+\int d^N q\, f(q^2) = \frac{\pi^{N/2}}{\Gamma(N/2)} \int_0^\infty dx \, x^\frac{N-2}{2} \, f(x)
+\]
+\paragraph{Loop Integral.}
+\begin{itemize}
+    \item 
+    \[
+    \int d^Nq \, \frac{1}{(q^2 +2pq + s^2)^M} = \pi^{N/2} \frac{\Gamma(M-N/2)}{\Gamma(M)} \frac{1}{(s^2 - p^2)^{M -N/2}}
+    \]
+    \item 
+    \[
+    \int d^Nq \, \frac{q^\mu}{(q^2 +2pq + s^2)^M} = \pi^{N/2} \frac{\Gamma(M-N/2)}{\Gamma(M)} \frac{-p^\mu}{(s^2 - p^2)^{M -N/2}}
+    \]
+    \item 
+    \[
+    \int d^Nq \, \frac{q^\mu q^\nu}{(q^2 +2pq + s^2)^M} = \pi^{N/2} \frac{\Gamma(M-N/2)}{\Gamma(M)} \frac{- g^{\mu\nu}}{(s^2 - p^2)^{M -N/2}}
+    \]
+\end{itemize}
+\paragraph{AdS/CFT. }
+\begin{itemize}
+    \item 
+    \[
+    \int_0^\infty dz_0 \int d^d\vec{z} \frac{z_0^a}{[z_0^2 + (\vec{z} - \vec{x})^2]^b [z_0^2 + (\vec{z} - \vec{y})^2]^c} \equiv I[a, b, c, d]|\vec{x} - \vec{y}|^{1+a+d-2b-2c} 
+    \]
+    \[
+    I[a, b, c, d] = \frac{\pi^{d/2}}{2} \frac{\Gamma[\frac{a}{2} + \frac{1}{2}]\Gamma[b + c - \frac{d}{2} - \frac{a}{2} - \frac{1}{2}]}{\Gamma[b]\Gamma[c]} \frac{\Gamma[\frac{1}{2} + \frac{a}{2} + \frac{d}{2} - b]\Gamma[\frac{1}{2} + \frac{a}{2} + \frac{d}{2} - c]}{\Gamma[1 + a + d - b - c]} 
+    \]
+\end{itemize}
+\paragraph{Other.}
+\begin{itemize}
+    \item 
+\[
+\int d^nq \frac{q^4}{(q^2 + m^2)^4} = 2\pi 
+\]
+\end{itemize}
+
 \newpage
 
 \section{Group Spin(1,3)}
 \paragraph{Definition.}
-The group Spin(1,3) is the double cover of the Lorentz group SO(1,3), which represents rotations and boosts in 4-dimensional spacetime. The generators of the Spin(1,3) group are given by the six components of the angular momentum operator and the boost operator, as for the Lorentz group:
+The Spin(1,3) group is the double cover of the Lorentz SO(1,3) group, which represents rotations and boosts in 4-dimensional spacetime. The generators of the Spin(1,3) group are given by the six components of the angular momentum operator and the boost operator:
 \[
 J_{i} = \frac{1}{2} \epsilon_{ijk} \sigma_{jk}, \quad K_{i} = i \sigma_{0i}
 \]
@@ -103,31 +214,107 @@ where \( \sigma_{\mu\nu} = \frac{i}{2} [\gamma_\mu, \gamma_\nu] \) and \( \gamma
 \[
 [J_i, J_j] = i \epsilon_{ijk} J_k, \quad [K_i, K_j] = -i \epsilon_{ijk} J_k, \quad [J_i, K_j] = i \epsilon_{ijk} K_k
 \]
-Rappresentation of Spin(1,3) has to be with even dimension.
+The representation of Spin(1,3) must be of even dimension.
 
 \subsection{Spinor Representation.}
-The spinor representation of the Spin(1,3) group is given in the space of Dirac spinors. The rappresentation is provide by 4x4 matrix, the most important are:
+The spinor representation of the Spin(1,3) group is given in the space of Dirac spinors. The representation is provided by 4x4 matrices, the most important of which are summarized below:
 
-wich are summerized in:
-
-
+\paragraph{Dirac Matrices.}
+\begin{itemize}
+    \item Gamma matrices:
+    \[
+    \gamma^0 = \begin{pmatrix}
+    I & 0 \\
+    0 & -I
+    \end{pmatrix}, \quad
+    \gamma^i = \begin{pmatrix}
+    0 & \sigma^i \\
+    -\sigma^i & 0
+    \end{pmatrix} \quad (i = 1, 2, 3)
+    \]
+    Summarized in the compact notation:
+    \[
+    \gamma^\mu = (\gamma^0, \gamma^1, \gamma^2, \gamma^3)
+    \]
+    where the \(\mu\) index has to be intended in the Lorentz sense.
+    \item Gamma 5 matrix:
+    \[
+    \gamma^5 = i\gamma^0\gamma^1\gamma^2\gamma^3 = \begin{pmatrix}
+    0 & I \\
+    I & 0
+    \end{pmatrix}
+    \]
+    \item Sigma matrices:
+    \[
+    \sigma^{\mu\nu} = \frac{i}{2} [\gamma^\mu, \gamma^\nu]
+    \]
+\end{itemize}
 Dirac spinors transform under Lorentz transformations as follows:
 \[
 \psi \rightarrow e^{-\frac{i}{2} \omega_{\mu\nu} \sigma^{\mu\nu}} \psi
 \]
-where \( \omega_{\mu\nu}  \) are the parameters of the Lorentz transformation.
+where \( \omega_{\mu\nu} \) are the parameters of the Lorentz transformation.
 
+\paragraph{Note.} Faymann notation prescription: \( \gamma^\mu a_\mu = \slashed{a} \)
 
 \paragraph{Properties.}
 \begin{itemize}
-    \item
+    \item 
     \[
     \{\gamma^\mu, \gamma^\nu\} = 2 \eta^{\mu\nu} I
     \]
     \item 
     \[
-    \gamma_5 = \frac{i}{4}\epsilon_{\mu\nu\rho\sigma} = 
+    \gamma^5 = \frac{i}{4} \epsilon_{\mu\nu\rho\sigma} \gamma^{\mu}\gamma^\nu\gamma^\rho\gamma^\sigma = i\gamma^0\gamma^1\gamma^2\gamma^3
+    \]
+    \item 
+    \[
+    Tr[\gamma^\mu] = 0
+    \]
+    \item 
+    \[
+    \gamma^\mu \gamma_\mu = I + I + I + I = 4 I
+    \]
+    \item 
+    \[
+    \gamma^\beta\slashed{a}\gamma_\beta = -2 \slashed{a}
+    \]
+    \item 
+    \[
+    \slashed{p} \gamma^\mu \slashed{p} = p^2 \gamma^\mu - 2 p^\mu \slashed{p}
+    \]
+    \item 
+    \[
+    Tr[\slashed{a_1}\slashed{a_2}\cdots\slashed{a_n}] = 0 \quad\quad\quad \text{For odd }n
+    \]
+    \item 
+    \[
+    Tr[\gamma^\mu\gamma^\nu] = g^{\mu\nu}
+    \]
+    \[
+    Tr[\slashed{a}\slashed{b}] = a^\mu b_\mu
+    \]
+    \item 
+    \[
+\mathrm{Tr}(\gamma^\mu \gamma^\nu \gamma^\rho \gamma^\sigma) = 4 \left( 
+g^{\mu\nu} g^{\rho\sigma} - 
+g^{\mu\rho} g^{\nu\sigma} + 
+g^{\mu\sigma} g^{\nu\rho} 
+\right)
+\]
+    \[
+    Tr[ \slashed{a_1}\slashed{a_2}\slashed{a_3}\slashed{a_4}] = 4[(a_1\cdot a_2)(a_3 \cdot a_4) - (a_1 \cdot a_3)(a_2 \cdot a_4) + (a_1 \cdot a_4)(a_2 \cdot a_3)]
+    \]
+    \item 
+    \[
+    \gamma^{\mu\dagger} = \gamma^0 \gamma^\mu\gamma^0
+    \]
+    \item 
+    \[
+    \gamma_\alpha \gamma_\beta \gamma_\alpha = 2(1 - \epsilon)\gamma_\beta \quad\quad\quad \text{In d} = 4 -2\epsilon
     \]
 \end{itemize}
 
+
 \end{document}
+
