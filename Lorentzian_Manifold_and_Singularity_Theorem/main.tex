@@ -1,0 +1,923 @@
+% ============================================================
+%  Lorentzian Manifolds and Penrose's Singularity Theorem
+%  Professional geometry paper template
+% ============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+% ---- ENCODING & LANGUAGE ----
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+% ---- FONTS ----
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ---- MATHEMATICS ----
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage{physics}
+
+% ---- PAGE GEOMETRY ----
+\usepackage[
+  top    = 2.5cm,
+  bottom = 2.5cm,
+  left   = 2.8cm,
+  right  = 2.8cm
+]{geometry}
+
+% ---- GRAPHICS & FIGURES ----
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% ---- HYPERLINKS ----
+\usepackage[
+  colorlinks = true,
+  linkcolor  = blue!60!black,
+  citecolor  = green!50!black,
+  urlcolor   = blue!70!black
+]{hyperref}
+\usepackage{cleveref}
+
+% ---- BIBLIOGRAPHY ----
+\usepackage[
+  backend  = biber,
+  style    = alphabetic,
+  sorting  = nyt
+]{biblatex}
+\addbibresource{reference.bib}
+
+% ---- HEADER & FOOTER ----
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Lorentzian Manifolds and Singularity Theorems}}
+\fancyhead[R]{\small\textit{N. Raffaeli}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---- SPACING ----
+\usepackage{setspace}
+\setstretch{1.15}
+
+% ---- ABSTRACT ----
+\usepackage{abstract}
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}
+\renewcommand{\abstracttextfont}{\normalfont\small}
+
+% ============================================================
+%  THEOREM ENVIRONMENTS
+% ============================================================
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{setup}[theorem]{Setup}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+
+% ============================================================
+%  MACROS AND NOTATION
+% ============================================================
+
+% --- Manifold and tensors ---
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\g}{g}
+\newcommand{\TM}{T\mathcal{M}}
+\newcommand{\NM}{N\mathcal{M}}
+
+% --- Covariant derivatives ---
+\newcommand{\covd}{\nabla}
+\newcommand{\covdt}{\nabla_{\dot{c}}}
+\newcommand{\Lie}{\mathcal{L}}
+
+% --- Curvature ---
+\newcommand{\Riem}{R}
+\newcommand{\Ric}{\operatorname{Ric}}
+\newcommand{\Scal}{\operatorname{Scal}}
+\newcommand{\Sec}{\operatorname{K}}
+
+% --- Causal sets ---
+\newcommand{\Ip}[1]{I^+\!\left(#1\right)}
+\newcommand{\Im}[1]{I^-\!\left(#1\right)}
+\newcommand{\Jp}[1]{J^+\!\left(#1\right)}
+\newcommand{\Jm}[1]{J^-\!\left(#1\right)}
+\newcommand{\Ep}[1]{E^+\!\left(#1\right)}
+\newcommand{\Em}[1]{E^-\!\left(#1\right)}
+
+% --- Index Form ---
+\newcommand{\Ind}{\mathcal{I}}
+
+% --- Causal character ---
+\newcommand{\FD}{\mathrm{FD}}
+\newcommand{\PD}{\mathrm{PD}}
+\newcommand{\FDTL}{\mathrm{FDTL}}
+\newcommand{\PDTL}{\mathrm{PDTL}}
+
+% --- Lorentzian inner product ---
+\newcommand{\ls}[2]{\langle #1,\, #2 \rangle}
+
+% --- Miscellaneous ---
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\II}{\mathrm{I\!I}}   % Second fundamental form
+
+% ============================================================
+%  DOCUMENT
+% ============================================================
+
+\begin{document}
+
+% ---- TITLE PAGE ----
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+
+  {\LARGE\bfseries Lorentzian Manifolds\\[0.4em]
+   and Penrose's Singularity Theorem}
+
+  \vspace{1.5cm}
+
+  {\large N.\ Raffaeli}
+
+  {\normalsize February 2026}
+
+  \vspace{2cm}
+
+  \begin{abstract}
+    \noindent
+    These notes present a self-contained treatment of the geometry of
+    Lorentzian manifolds culminating in a proof of Penrose's singularity
+    theorem (1965). We develop the necessary causal theory---globally
+    hyperbolic spacetimes, trapped surfaces, Jacobi fields along null
+    geodesics, and the index form---before proving that any spacetime
+    satisfying the null energy condition and containing a compact trapped
+    surface (together with a non-compact Cauchy surface) must be
+    future null geodesically incomplete.
+  \end{abstract}
+\end{titlepage}
+
+% ---- TABLE OF CONTENTS ----
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+The study of singularities in general relativity began with the 1965 paper of Roger Penrose~\cite{Penrose1965}, which
+provided the first rigorous mathematical proof that singularities are
+an unavoidable consequence of gravitational collapse. The key novel ingredient was the notion of a \emph{trapped surface}: a compact spacelike $(n-2)$-hypersurface on which both families of outgoing and incoming null geodesics converge. For more details use the reference \cite{KunzingerSteinbauer}.
+
+\medskip
+
+The goal of these notes is to present a complete and accessible proof
+of Penrose's theorem, intruducing all the necessary geometric machinery
+along the way. The argument proceeds through four main stages:
+
+\begin{enumerate}
+  \item \textbf{Trapped surfaces.}
+    We define trapped surfaces via the mean curvature vector $H$ and
+    establish the equivalence of several characterisations
+    (Lemma~\ref{lem:trapped-surface}).
+
+  \item \textbf{Jacobi fields and focal points.}
+    We recall the theory of Jacobi fields along null geodesics,
+    define the index form $\mathcal{I}_P$, and prove
+    (Proposition~\ref{prop:focal-point}) that, under the null energy
+    condition, every null geodesic emanating perpendicularly from a
+    trapped surface develops a focal point in finite affine time.
+
+  \item \textbf{Compactness of the future horismos.}
+    Using the focal-point estimate, we show
+    (Proposition~\ref{prop:trapped-set}) that $E^+(P)$ is compact,
+    i.e.\ the trapped surface is a \emph{future trapped set}.
+
+  \item \textbf{Topological contradiction.}
+    A continuous injective map from the compact $E^+(P)$ to the
+    non-compact Cauchy surface $S$ yields the contradiction
+    (Theorem~\ref{thm:Penrose}).
+\end{enumerate}
+
+% ============================================================
+\section{Lorentzian Preliminaries}
+% ============================================================
+
+\subsection{Lorentzian Manifolds}
+
+\begin{definition}[Lorentzian Manifold]
+  A \emph{Lorentzian manifold} is a pair $(\M, g)$ where $\M$ is a
+  smooth, connected manifold and $g$ is a
+  smooth symmetric non-degenerate $(0,2)$-tensor field of signature
+  $(-,+,\ldots,+)$, i.e.\ at every $p \in \M$ there exists a basis
+  $\{e_0, e_1, \ldots, e_{n-1}\}$ of $T_p\M$ such that
+  \[
+    g_p(e_\mu, e_\nu) \;=\; \eta_{\mu\nu}
+    \;:=\; \operatorname{diag}(-1,+1,\ldots,+1).
+  \]
+\end{definition}
+
+\begin{definition}[Levi-Civita Connection]
+  The \emph{Levi-Civita connection} of $(\M, g)$ is the unique affine
+  connection $\nabla$ on $\M$ that is:
+  \begin{enumerate}
+    \item \emph{metric compatible}: $\nabla g = 0$, equivalently
+          $X\ls{Y}{Z} = \ls{\nabla_X Y}{Z} + \ls{Y}{\nabla_X Z}$
+          for all $X, Y, Z \in \mathfrak{X}(\M)$;
+    \item \emph{torsion-free}: $\nabla_X Y - \nabla_Y X = [X, Y]$
+          for all $X, Y \in \mathfrak{X}(\M)$.
+  \end{enumerate}
+  Its expression in local coordinates is given by the
+  \emph{Christoffel symbols}
+  \[
+    \Gamma^\lambda_{\mu\nu}
+    \;=\; \frac{1}{2}\, g^{\lambda\sigma}
+          \bigl(\partial_\mu g_{\nu\sigma}
+               + \partial_\nu g_{\mu\sigma}
+               - \partial_\sigma g_{\mu\nu}\bigr).
+  \]
+\end{definition}
+
+\begin{definition}[Geodesic]
+\label{def:geodesic}
+  A smooth curve $\gamma \colon I \to \M$ is a \emph{geodesic} if its
+  velocity field is parallel along itself, i.e.\
+  \[
+    \frac{\nabla \dot{\gamma}}{dt} \;=\; \nabla_{\dot{\gamma}}\dot{\gamma} \;=\; 0.
+  \]
+  In local coordinates, this reads
+  \[
+    \ddot{\gamma}^\lambda(t)
+    + \Gamma^\lambda_{\mu\nu}(\gamma(t))\,\dot{\gamma}^\mu(t)\,\dot{\gamma}^\nu(t)
+    \;=\; 0, \qquad \lambda = 0, \ldots, n-1.
+  \]
+\end{definition}
+
+\begin{definition}[Riemann Curvature Tensor]
+  The \emph{Riemann curvature tensor} is the $(1,3)$-tensor field
+  \[
+    R(X,Y)Z \;:=\; \nabla_X\nabla_Y Z
+                  - \nabla_Y\nabla_X Z
+                  - \nabla_{[X,Y]}Z,
+    \qquad X,Y,Z \in \mathfrak{X}(\M).
+  \]
+  It satisfies the symmetries
+  \begin{align*}
+    \ls{R(X,Y)Z}{W} &= -\ls{R(Y,X)Z}{W},\\
+    \ls{R(X,Y)Z}{W} &= -\ls{R(X,Y)W}{Z},\\
+    \ls{R(X,Y)Z}{W} &= \ls{R(Z,W)X}{Y},\\
+    R(X,Y)Z + R(Y,Z)X + R(Z,X)Y &= 0
+    \quad\text{(first Bianchi identity)}.
+  \end{align*}
+\end{definition}
+
+\begin{remark}
+  There is no fundamental difference with respect to the Riemannian case. All the distinction is encoded in the different prescription for the metric: $\Gamma$ is defined in terms of a metric with Lorentzian signature, but the formal expressions are identical.
+\end{remark}
+
+\subsection{Causal Structure}
+
+\begin{definition}[Causal Character]
+  A tangent vector $v \in T_p\M$ is called
+  \begin{itemize}
+    \item \emph{timelike} if $\ls{v}{v} < 0$,
+    \item \emph{null} (or \emph{lightlike}) if $\ls{v}{v} = 0$, $v \neq 0$,
+    \item \emph{spacelike} if $\ls{v}{v} > 0$ or $v = 0$,
+    \item \emph{causal} if it is timelike or null.
+  \end{itemize}
+\end{definition}
+
+\begin{remark}
+  Since $\nabla g = 0$, the quantity $\ls{\dot{\gamma}}{\dot{\gamma}}$ is
+  constant along any geodesic. A geodesic is therefore timelike,
+  null, or spacelike according to the causal character of its initial
+  velocity. We refer to null geodesics as \emph{lightlike geodesics};
+  these are the trajectories of light rays in general relativity.
+\end{remark}
+
+\begin{definition}[Time Orientation]
+  A \emph{time orientation} is a smooth map $\tau \colon \M \to T\M$ such that:
+  \begin{itemize}
+    \item $\tau_p := \tau(p)$ is timelike for every $p \in \M$;
+    \item for every $p \in \M$ there exists a chart $(x, U)$ with $p \in U$ such that
+          $\partial_0\big|_q \in \tau_p$ for every $q \in U$.
+  \end{itemize}
+\end{definition}
+
+\begin{proposition}
+  For a Lorentzian manifold $\M$, the following conditions are equivalent:
+  \begin{enumerate}
+    \item $\M$ is time-orientable, i.e.\ it admits a time orientation;
+    \item $\M$ admits a continuous timelike vector field;
+    \item $\M$ admits a smooth timelike vector field.
+  \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  $(3 \Rightarrow 2)$ Immediate.
+
+  $(2 \Rightarrow 1)$ Given a continuous timelike vector field $T$, define $\tau_p := T(p)$ locally via
+  a chart.
+
+  $(1 \Rightarrow 3)$ Let $\{\rho_\alpha\}$ be a partition of unity subordinate to an atlas
+  $\{(U_\alpha, x_\alpha)\}$ of $\M$. Set $X_\alpha := \rho_\alpha \partial_0$. Then
+  \[
+    T \;:=\; \sum_\alpha \rho_\alpha \,\partial_0
+  \]
+  defines a smooth timelike vector field on $\M$.
+\end{proof}
+
+\begin{remark}
+  A time orientation $\tau$ determines a notion of future and past: a causal vector
+  $v \in T_p\M$ is called
+  \begin{itemize}
+    \item \emph{future-directed} if $\ls{v}{\tau_p} < 0$,
+    \item \emph{past-directed} if $\ls{v}{\tau_p} > 0$.
+  \end{itemize}
+\end{remark}
+
+\subsection{Topology of Causality}
+
+\begin{definition}[Causal Relations]
+  For $p, q \in \M$ we write:
+  \begin{itemize}
+    \item $p \ll q$ if there exists a future-directed timelike curve from $p$ to $q$;
+    \item $p < q$ if there exists a future-directed causal curve from $p$ to $q$;
+    \item $p \leq q$ if $p < q$ or $p = q$.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Chronological and Causal Futures]
+  Given $A \subseteq \M$, the \emph{chronological future and past} of $A$ are
+  \[
+    I^{\pm}(A) \;=\; \bigl\{\,q \in \M \;\big|\; p \ll q \text{ for some } p \in A\,\bigr\},
+  \]
+  and the \emph{causal future and past} of $A$ are
+  \[
+    J^{\pm}(A) \;=\; \bigl\{\,q \in \M \;\big|\; p \leq q \text{ for some } p \in A\,\bigr\}.
+  \]
+\end{definition}
+
+\begin{proposition}
+  For every $A \subseteq \M$, the set $I^{\pm}(A)$ is open.
+\end{proposition}
+
+\begin{proof}
+  The relation $p \ll q$ is open. Given a future-directed timelike curve
+  $\gamma \colon [0,1] \to \M$ with $\gamma(0) = p$ and $\gamma(1) = q$,
+  a standard argument shows that for any $p'$ in a sufficiently small
+  neighbourhood of $p$ there exists a future-directed timelike curve
+  from $p'$ to some $q'$ in a neighbourhood of $q$, i.e.\ the
+  relation is stable under small perturbations of the endpoints.
+\end{proof}
+
+\begin{proposition}
+  The following topological properties hold:
+  \begin{itemize}
+    \item $I^{\pm}(A) = \operatorname{Int}\bigl(J^{\pm}(A)\bigr)$, the topological interior.
+    \item $J^{\pm}(A) \subseteq \overline{I^{\pm}(A)}$, with equality when $A$ is closed.
+  \end{itemize}
+\end{proposition}
+
+\begin{definition}[Time Separation]
+    For $p, q \in \M$ define the time separation:
+    \[
+    \tau(p,q) = \sup\{L(\gamma) | \gamma \text{ causal geodesic joining } p \text{ to } q\} \quad \text{if } p < q
+    \]
+    While is zero if no timelike geodesic can be find.
+\end{definition}
+
+\subsection{Submanifolds}
+
+Let $P \subseteq \M$ be a smooth submanifold. For $p \in P$ we have
+the orthogonal decomposition
+\[
+  T_p\M \;=\; T_pP \;\oplus\; (T_pP)^\perp,
+\]
+where $(T_pP)^\perp = N_pP$ is the normal space at $p$. The Weingarten map provides a smooth description of the extrinsic geometry: given a smooth unit normal vector field $N \in \mathfrak{X}(\M)$ along $P$, i.e.\ satisfying
+\begin{itemize}
+  \item $\ls{N_p}{N_p} = \pm 1$ for every $p \in P$,
+  \item $\ls{N_p}{X_p} = 0$ for every $X_p \in T_pP$,
+\end{itemize}
+the \emph{Weingarten map} (shape operator) is the self-adjoint endomorphism
+\[
+  W_p \colon T_pP \longrightarrow T_pP, \qquad W_p(A) := -\nabla^{\M}_A N.
+\]
+
+\begin{definition}[Second Fundamental Form]
+  The \emph{second fundamental form} of $P \subseteq \M$ is the
+  symmetric bilinear map
+  \[
+    K_p \colon T_pP \times T_pP \;\longrightarrow\; N_pP,
+    \qquad
+    K_p(X,Y) \;:=\; \bigl(\nabla^{\M}_X Y\bigr)^\perp,
+  \]
+  i.e.\ the normal component of $\nabla^{\M}_X Y$ for $X, Y \in \mathfrak{X}(P)$.
+  In terms of a unit normal $N$, one has $\ls{K_p(X,Y)}{N} = -\ls{\nabla^{\M}_X N}{Y}$.
+  The \emph{mean curvature vector} at $p$ is
+  \[
+    H_p \;:=\; \frac{1}{\dim P}\sum_{i=1}^{\dim P} K_p(e_i, e_i),
+  \]
+  where $\{e_i\}$ is any orthonormal basis of $T_pP$.
+\end{definition}
+
+
+% ============================================================
+\section{Cauchy Hypersurfaces and Global Hyperbolicity}
+% ============================================================
+
+\begin{definition}[Cauchy Hypersurface]
+  A subset $\Sigma \subseteq \M$ of a time-oriented Lorentzian manifold is a
+  \emph{Cauchy hypersurface} if every inextendible timelike curve
+  intersects $\Sigma$ exactly once.
+\end{definition}
+
+\begin{proposition}
+\label{prop:cauchy-properties}
+  Let $\M$ be a connected and time-orientable Lorentzian manifold, and let
+  $\Sigma \subseteq \M$ be a Cauchy hypersurface of $\M$. Then:
+  \begin{enumerate}
+    \item $\Sigma$ is achronal;
+    \item $\Sigma$ is a closed topological hypersurface;
+    \item every inextendible causal curve intersects $\Sigma$.
+  \end{enumerate}
+\end{proposition}
+
+\begin{definition}[Global Hyperbolicity]
+  A subset $B \subseteq \M$ is \emph{globally hyperbolic} if:
+  \begin{enumerate}
+    \item For all $p \in B$ and every neighbourhood $U$ of $p$, there exists
+          a neighbourhood $V \subseteq U$ of $p$ such that every causal curve
+          starting and ending in $V$ is entirely contained in $U$;
+    \item the \emph{causal diamond} $J(p,q) := J^+(p) \cap J^-(q)$ is compact
+          for all $p, q \in B$.
+  \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Bernal-Sanchez]
+\label{thm:geroch}
+  Let $(\M, g)$ be a connected and time-oriented Lorentzian manifold. The
+  following are equivalent:
+  \begin{enumerate}
+    \item $\M$ is globally hyperbolic;
+    \item $\M$ has a Cauchy hypersurface $\Sigma$;
+    \item $\M$ has a smooth spacelike Cauchy hypersurface $\Sigma$;
+    \item any two smooth spacelike Cauchy hypersurfaces $\Sigma$ and $\Sigma'$
+          are diffeomorphic, and $\M$ is isometric to $\mathbb{R} \times \Sigma$.
+  \end{enumerate}
+\end{theorem}
+
+The following topological result will be important later:
+
+\begin{lemma}
+\label{lem:compact-causal-future}
+  Let $K \subseteq \M$ be compact, and suppose $\M$ is globally hyperbolic.
+  Then $J^{\pm}(K)$ is closed.
+\end{lemma}
+
+\begin{remark}
+    Up to now, we have set a former and conclusive topological description that follow from a well posed notion of geodesic distance. In Riemannian geometry this was almost trivial, while in Lorentzian, as we have showned, it's more intricate and need to be completed with global hyperbolicity condition. 
+\end{remark}
+
+
+% ============================================================
+\section{Trapped Surfaces}
+% ============================================================
+
+We begin with a purely topological notion.
+
+\begin{definition}[Future Trapped Set]
+  A set $A \subseteq \M$ is a \emph{future trapped set} if its future horismos
+  \[
+    E^{+}(A) \;:=\; J^{+}(A) \setminus I^{+}(A) 
+  \]
+  is compact.
+\end{definition}
+
+The remainder of this and the following sections shows that the following intrinsic curvature condition on a hypersurface $P$ is equivalent to $P$ being a future trapped set, under appropriate hypothesis.
+
+\begin{definition}[Trapped Surface]
+\label{def:trapped-surface}
+  A compact, spacelike, achronal $(n-2)$-dimensional submanifold $P \subset \M$ is a
+  \emph{future trapped surface} if any of the following equivalent conditions holds:
+  \begin{enumerate}
+    \item The mean curvature vector $H$ is past-directed timelike ($\PDTL$) on $P$.
+    \item $k(X) := \ls{H}{X} > 0$ for all future-directed null $X \in (TP)^\perp$.
+    \item $k(X) > 0$ for all future-directed causal $X \in (TP)^\perp$.
+  \end{enumerate}
+  The scalar $k(X)$ is called the \emph{null convergence} in the direction $X$.
+\end{definition}
+
+\begin{lemma}
+\label{lem:trapped-surface}
+  The three conditions in Definition~\ref{def:trapped-surface} are
+  equivalent.
+\end{lemma}
+
+\begin{proof}
+  $(1) \Rightarrow (3)$: Since $H$ is $\PDTL$, for every future-directed
+  causal $X$ the reverse Cauchy--Schwarz inequality gives
+  $\ls{H}{X} > 0$.
+
+  $(3) \Rightarrow (2)$: Immediate, since every future-directed null vector is causal.
+
+  $(2) \Rightarrow (1)$: Fix $p \in P$ and choose an orthonormal basis so that
+  $g(p) = \mathrm{diag}(-1,+1,\ldots,+1)$. Since $\operatorname{codim} P = 2$,
+  the normal space $N_pP$ is a Lorentzian plane with basis $\{e_0, e_1\}$,
+  where $e_0$ is future-directed timelike and $e_1$ is spacelike.
+  Write $H_p = \lambda_0 e_0 + \lambda_1 e_1$. The vectors
+  $X_\pm := e_0 \pm e_1$ are future-directed null, so condition~(2) yields
+  \[
+    0 < \ls{H}{X_\pm} = -\lambda_0 \pm \lambda_1,
+  \]
+  whence $|\lambda_1| < -\lambda_0$, giving $\lambda_0 < 0$ and
+  \[
+    \ls{H}{H} = -\lambda_0^2 + \lambda_1^2 < 0.
+  \]
+  Therefore $H_p$ is past-directed timelike.
+\end{proof}
+
+\begin{remark}[Physical Interpretation]
+  A trapped surface models a region of such intense gravitational
+  collapse that both the outgoing and ingoing families of null
+  geodesics converge. This occurs, for example, inside the
+  Schwarzschild horizon $r < 2m$.
+\end{remark}
+
+
+% ============================================================
+\section{Jacobi Fields Along Null Geodesics}
+% ============================================================
+
+\subsection{Jacobi Fields and the Jacobi Equation}
+
+\begin{definition}[Jacobi Field]
+  A vector field $J$ along a geodesic $\gamma \colon [a,b] \to \M$ is a
+  \emph{Jacobi field} if it satisfies the \emph{Jacobi equation}
+  \[
+    \nabla_{\dot{\gamma}}\nabla_{\dot{\gamma}} J + R(J, \dot{\gamma})\dot{\gamma} \;=\; 0.
+  \]
+\end{definition}
+
+Jacobi fields are interpreted as infinitesimal geodesic deviation. Consider a smooth variation
+\[
+  f \colon (-\delta, \delta) \times [a, b] \longrightarrow \M, \qquad f(0, s) = \gamma(s),
+\]
+with $s \mapsto f(\lambda, s)$ a geodesic for every $\lambda$. Define the vector fields
+\[
+  \partial_\lambda f := df(\partial_\lambda), \qquad \partial_s f := df(\partial_s) = \dot{\gamma}.
+\]
+Since $f$ is smooth, the coordinate vector fields commute:
+\[
+  \nabla_{\partial_s f}\,\partial_\lambda f - \nabla_{\partial_\lambda f}\,\partial_s f
+  = [\partial_s f,\, \partial_\lambda f] = 0.
+\]
+Using this together with the geodesic equation $\nabla_{\partial_s f}\partial_s f = 0$ and the definition of the curvature tensor, one computes
+\[
+  \nabla_{\partial_s f}\nabla_{\partial_s f}\,\partial_\lambda f
+  = \nabla_{\partial_s f}\nabla_{\partial_\lambda f}\,\partial_s f
+  = \nabla_{\partial_\lambda f}\nabla_{\partial_s f}\,\partial_s f - R(\partial_s f,\, \partial_\lambda f)\,\partial_s f
+  = - R(\partial_s f,\, \partial_\lambda f)\,\partial_s f,
+\]
+which is precisely the Jacobi equation for $J := \partial_\lambda f\big|_{\lambda=0}$.
+
+\begin{remark}
+  \begin{enumerate}
+    \item Following Frobenius theorem, the space of Jacobi fields along $\gamma$ has dimension $2n$.
+    \item The Jacobi equation is a second-order linear ODE along $\gamma$.
+    \item Given initial data $J(a)$ and $\nabla_{\dot{\gamma}} J(a)$, there exists a unique Jacobi field along $\gamma$.
+  \end{enumerate}
+\end{remark}
+
+\subsection{$P$-Jacobi Fields and Focal Points}
+
+Let $P \subseteq \M$ be a spacelike submanifold, and let
+$\gamma \colon [0,b] \to \M$ be a geodesic with $\gamma(0) \in P$ and
+$\dot{\gamma}(0) \in N_{\gamma(0)}P$.
+
+\begin{definition}[$P$-Jacobi Field]
+  A Jacobi field $J$ along $\gamma$ is a \emph{$P$-Jacobi field} if
+  \[
+    J(0) \in T_{\gamma(0)}P
+    \quad\text{and}\quad
+    \bigl(\nabla_{\dot{\gamma}} J(0)\bigr) \in N_{\gamma(0)}P,
+  \]
+  So $J$ is the variational field of a variation whose
+  initial curve lies in $P$ and whose initial velocities are normal to $P$.
+\end{definition}
+
+\begin{definition}[Focal Point]
+  A point $\gamma(t_f)$, $t_f \in (0, b]$, is a \emph{focal point} of $P$
+  along $\gamma$ if there exists a non-trivial $P$-Jacobi field $J$ with
+  $J(t_f) = 0$.
+\end{definition}
+
+\begin{lemma}
+\label{lem:focal-compact}
+  Let $P \subseteq \M$ be a submanifold and $\gamma \colon [0, b] \to \M$ a
+  geodesic with $\gamma(0) \in P$ and $\dot{\gamma}(0) \perp P$. Then the set
+  \[
+    F \;:=\; \bigl\{\,t \in (0,b] \;\big|\; t \text{ is a focal point of } P
+             \text{ along } \gamma\,\bigr\}
+  \]
+  is compact.
+\end{lemma}
+
+
+% ============================================================
+\section{The Index Form}
+% ============================================================
+
+\subsection{Definition and Second Variation}
+
+Let $\gamma \colon [a, b] \to \M$ be a geodesic, and let $\mathfrak{X}(\gamma)$ denote
+the space of piecewise smooth vector fields along $\gamma$.
+
+\begin{definition}[Index Form]
+\label{def:index-form}
+  The \emph{index form} (or \emph{second variation form}) is the
+  symmetric bilinear map $\Ind \colon \mathfrak{X}(\gamma) \times
+  \mathfrak{X}(\gamma) \to \mathbb{R}$ defined by
+  \[
+    \Ind(V, W) \;:=\;
+    \int_a^b \Bigl(\ls{\nabla_{\dot{\gamma}} V}{\nabla_{\dot{\gamma}} W}
+      - \ls{R(V,\dot{\gamma})W}{\dot{\gamma}}\Bigr)\,dt.
+  \]
+  We write $\Ind(V) := \Ind(V,V)$ for the associated quadratic form.
+\end{definition}
+
+\begin{remark}
+  The index form arises as the second variation of the length (or energy) functional
+  evaluated at a critical point, i.e.\ along a geodesic.
+\end{remark}
+
+\begin{theorem}
+\label{thm:index-jacobi}
+  If $J$ is a Jacobi field, and $W \in \mathfrak{X}(\gamma)$
+  satisfies $W(a) = W(b) = 0$, then $\Ind(W, J) = 0$.
+\end{theorem}
+
+\begin{proof}
+  Integrating by parts using
+  \[
+    \frac{d}{dt}\ls{W}{\nabla_{\dot{\gamma}} J}
+    = \ls{\nabla_{\dot{\gamma}} W}{\nabla_{\dot{\gamma}} J}
+      + \ls{W}{\nabla_{\dot{\gamma}}^2 J},
+  \]
+  we obtain
+  \begin{align*}
+    \Ind(W, J) \;&=\;
+    \int_a^b \Bigl(\ls{\nabla_{\dot{\gamma}} W}{\nabla_{\dot{\gamma}} J}
+      - \ls{R(J,\dot{\gamma})\dot{\gamma}}{W}\Bigr)\,dt \\
+    &= \ls{W}{\nabla_{\dot{\gamma}} J}\Bigr|_a^b
+      - \int_a^b \ls{W}{\nabla_{\dot{\gamma}}^2 J
+        + R(J,\dot{\gamma})\dot{\gamma}}\,dt = 0,
+  \end{align*}
+  where the boundary term vanishes because $W(a) = W(b) = 0$, and the
+  integral vanishes by the Jacobi equation.
+\end{proof}
+
+\subsection{The Case of $P$-Jacobi Fields}
+
+For a variation with initial curve in $P$, integration by parts on
+$\int_0^b \ls{\nabla_{\dot{\gamma}} V}{\nabla_{\dot{\gamma}} V}\,dt$ using $V(b) = 0$ yields the boundary term
+\[
+  -\ls{\nabla_{\dot{\gamma}} V(0)}{V(0)}.
+\]
+Since $\dot{\gamma}(0) \perp P$, the decomposition of $\nabla_{\dot{\gamma}} V(0)$
+via the Weingarten map gives
+\[
+  \ls{\nabla_{\dot{\gamma}} V(0)}{V(0)}
+  = \ls{K(V(0),V(0))}{\dot{\gamma}(0)},
+\]
+where $K$ denotes the second fundamental form. In the case of $P$-Jacobi fields, a properly normalized version of the index form is defined as follows:
+
+\begin{definition}[Index Form for $P$-Jacobi Fields]
+  For $P$-Jacobi fields $J, J'$ along $\gamma \colon [0, b] \to \M$, define
+  \[
+    \Ind_P(J, J') \;:=\;
+    \int_0^b \Bigl(\ls{\nabla_{\dot{\gamma}} J}{\nabla_{\dot{\gamma}} J'}
+      - \ls{R(J,\dot{\gamma})J'}{\dot{\gamma}}\Bigr)\,dt
+    - \ls{K(J(0), J'(0))}{\dot{\gamma}(0)}.
+  \]
+  We write $\Ind_P(J) := \Ind_P(J, J)$.
+\end{definition}
+
+\begin{theorem}
+\label{thm:index-positive}
+  If $\gamma$ has no focal point of $P$ in $(0, b]$, then
+  $\Ind_P(V) > 0$ for every non-trivial $V \in \mathfrak{X}(\gamma)_P$ with $V$ vanishing in $b$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+  The key idea is to decompose any $V \in \mathfrak{X}(\gamma)_P$ as $V = W + J$,
+  where $J$ is a $P$-Jacobi field. The absence of focal points in $(0, b]$ ensures that the
+  $P$-Jacobi fields form a basis of the normal space $\dot{\gamma}^\perp$
+  at each point, and the boundary term $W(0)$ contributes a strictly
+  positive correction to $\Ind_P(V)$.
+\end{proof}
+
+
+% ============================================================
+\section{Focal Points and Trapped Surfaces}
+% ============================================================
+
+\begin{lemma}[Ricci Formula for Null Vectors]
+\label{lem:ricci-null}
+  Let $\ell \in T_p\M$ be null and $\{e_1,\ldots,e_{n-2}\} \subset
+  T_p\M$ be spacelike, orthonormal, and orthogonal to $\ell$. Then
+  \[
+    \Ric(\ell,\ell)
+    \;=\; \sum_{j=1}^{n-2} \ls{R(e_j,\ell)e_j}{\ell}.
+  \]
+\end{lemma}
+
+\begin{proof}
+  Extend to a full orthonormal basis by adding $e_{n-1}$ (spacelike) and $e_n$
+  (timelike) with $e_{n-1} + e_n \propto \ell$. Expanding
+  $\Ric(\ell,\ell) = \sum_j \epsilon_j \ls{R(e_j,\ell)e_j}{\ell}$,
+  where $\epsilon_j = \ls{e_j}{e_j}$, and using the pair symmetry of $R$,
+  one shows that the contributions from $e_{n-1}$ and $e_n$ cancel,
+  yielding the result.
+\end{proof}
+
+\begin{proposition}[Focal Point Criterion]
+\label{prop:focal-point}
+  Let $P$ be a spacelike $(n-2)$-submanifold, and let
+  $\gamma \colon [0,b] \to \M$ be a null geodesic with $\gamma(0) \in P$ and
+  $\dot{\gamma}(0) \perp P$. Assume:
+  \begin{enumerate}
+    \item \emph{(Null energy condition)} $\Ric(\dot{\gamma}(t), \dot{\gamma}(t)) \geq 0$
+          for all $t \in [0,b]$;
+    \item \emph{(Initial convergence)} $\ls{H_{\gamma(0)}}{\dot{\gamma}(0)}
+          \geq \dfrac{1}{b}$.
+  \end{enumerate}
+  Then $\gamma$ has a focal point of $P$ in $(0, b]$.
+\end{proposition}
+
+\begin{proof}
+  Suppose for contradiction that $\gamma$ has no focal point. By
+  Theorem~\ref{thm:index-positive}, $\Ind_P(V) > 0$ for all
+  non-trivial $V \in \mathfrak{X}(\gamma)_P$.
+
+  \medskip\noindent\textbf{Test field.}
+  Let $\{e_1,\ldots,e_{n-2}\}$ be an orthonormal basis of $T_{\gamma(0)}P$
+  and, for each $i$, let $E_i$ denote the parallel transport of $e_i$
+  along $\gamma$. Set
+  \[
+    V_i(t) \;:=\; \left(1 - \frac{t}{b}\right) E_i(t).
+  \]
+  Then $V_i \in \mathfrak{X}(\gamma)_P$, and $\nabla_{\dot{\gamma}} V_i(t) = -\frac{1}{b} E_i(t)$ since
+  $E_i$ is parallel.
+
+  \medskip\noindent\textbf{Computing $\Ind_P(V_i)$.}
+  We calculate each term:
+  \begin{align*}
+    \int_0^b \ls{\nabla_{\dot{\gamma}} V_i}{\nabla_{\dot{\gamma}} V_i}\,dt
+    &= \int_0^b \frac{1}{b^2}\underbrace{\ls{E_i}{E_i}}_{=1}\,dt
+     = \frac{1}{b},\\
+    \int_0^b \ls{R(V_i,\dot{\gamma})V_i}{\dot{\gamma}}\,dt
+    &= \int_0^b \!\left(1-\tfrac{t}{b}\right)^2
+       \ls{R(E_i,\dot{\gamma})E_i}{\dot{\gamma}}\,dt \;\geq\; 0,
+  \end{align*}
+  where the second inequality follows from the null energy condition and
+  Lemma~\ref{lem:ricci-null}.
+
+  \medskip\noindent\textbf{Summing over the basis.}
+  Summing $\Ind_P(V_i) > 0$ for $i = 1,\ldots,n-2$ and using the
+  definition of $H$:
+  \[
+    0 \;<\; \sum_{i=1}^{n-2} \Ind_P(V_i)
+    \;\leq\; \frac{n-2}{b}
+             - 0
+             - (n-2)\underbrace{\ls{\dot{\gamma}(0)}{H_{\gamma(0)}}}_{\geq\,1/b}
+    \;\leq\; 0.
+  \]
+  This is the desired contradiction.
+\end{proof}
+
+\begin{proposition}[Trapped Surface $\Rightarrow$ Trapped Set]
+\label{prop:trapped-set}
+  Let $P \subseteq \M$ be a future trapped, achronal, compact $(n-2)$-surface.
+  Suppose $\M$ is future null geodesically complete and $\Ric(X,X) \geq 0$
+  for all null $X$. Then $E^+(P)$ is compact.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+  By Proposition~\ref{prop:focal-point}, every null geodesic emanating
+  perpendicularly from $P$ develops a focal point in finite affine time.
+  By Lemma~\ref{lem:focal-compact}, the set of focal points is compact.
+  Future null completeness and the time orientation define a flow that
+  establishes the compactness of $E^+(P)$.
+\end{proof}
+
+\begin{remark}[Physical Interpretation of the Null Energy Condition]
+  The physical interpretation of $\Ric(\dot{\gamma}, \dot{\gamma}) \geq 0$ is that whenever gravity is sufficiently strong, null geodesics start compressing. This follows from Einstein's field equation:
+  \[
+    \Ric(X,X) - \frac{1}{2} g(X,X) R \;=\; 8\pi T(X,X),
+  \]
+  Taking the trace of both sides:
+  \[
+    \tr(\Ric) - \frac{1}{2} \tr(g) R \;=\; 8\pi \tr(T),
+  \]
+  i.e., $R - \frac{n}{2} R = 8\pi \tr(T)$, which gives
+  \[
+    R \;=\; -8\pi \tr(T).
+  \]
+  Substituting back into Einstein's equation and contracting with a null vector $X$:
+  \[
+    \Ric(X,X) \;=\; 8\pi T(X,X) + \frac{1}{2} g(X,X) R
+    \;=\; 8\pi \( T(X,X) - \frac{1}{2}g(X, X)\tr(T)\),
+  \]
+  Hence the condition $\Ric(X,X) \geq 0$ for null vectors is equivalent to:
+  \[
+    T(X,X) \;\geq\; \frac{1}{2}g(X,X)\tr(T) 
+  \]
+\end{remark}
+
+% ============================================================
+\section{Penrose's Singularity Theorem}
+% ============================================================
+
+\begin{theorem}[Penrose 1965]
+\label{thm:Penrose}
+  Let $(\M, g)$ be a spacetime satisfying:
+  \begin{enumerate}
+    \item \emph{(Null energy condition)} $\Ric(X,X) \geq 0$ for all
+          null $X \in T\M$;
+    \item \emph{(Non-compact Cauchy surface)} there exists a
+          non-compact Cauchy surface $S \subseteq \M$;
+    \item \emph{(Trapped surface)} there exists a future trapped
+          spacelike $(n-2)$-submanifold $P$.
+  \end{enumerate}
+  Then $\M$ is \emph{not} future null geodesically complete, i.e.,
+  $\M$ contains a singularity.
+\end{theorem}
+
+\begin{proof}
+  Assume for contradiction that $\M$ is future null geodesically complete.
+
+  \medskip\noindent\textbf{Step 1: $E^+(P)$ is a compact achronal
+  smooth hypersurface.}
+  Since $S$ is a Cauchy surface, $\M$ is globally hyperbolic by
+  Theorem~\ref{thm:geroch}. The set $J^+(P)$ is closed by
+  Lemma~\ref{lem:compact-causal-future} (compactness of $P$ and global
+  hyperbolicity), and by standard results in Lorentzian geometry,
+  \[
+    E^+(P) = \partial J^+(P) = \overline{J^+(P)} \setminus
+    \operatorname{int}(J^+(P))
+  \]
+  is a closed achronal smoooth hypersurface. Proposition~\ref{prop:trapped-set}
+  (applicable because $\M$ is null complete by assumption) yields that
+  $E^+(P)$ is compact.
+
+  \medskip\noindent\textbf{Step 2: $E^+(P) \neq \emptyset$.}
+  If $E^+(P) = \emptyset$ then $I^+(P) = J^+(P)$ is simultaneously
+  open, closed, and non-empty, hence $I^+(P) = \M$ by connectedness.
+  But then $P \subset I^+(P)$ contradicts the assumption that $P$ is achronal.
+
+  \medskip\noindent\textbf{Step 3: Continuous injective map to $S$.}
+  Using the flow of timelike vector fields and the global hyperbolicity
+  of $\M$, one can construct a continuous injective map
+  $\rho \colon E^+(P) \to S$.
+
+  \medskip\noindent\textbf{Step 4: Topological contradiction.}
+  Both $E^+(P)$ and $S$ are smooth manifolds of dimension $n-1$. Hence $\rho(E^+(P))$ is:
+  \begin{itemize}
+    \item \emph{open} in $S$ (by invariance of domain),
+    \item \emph{closed} in $S$ (as the continuous image of a compact set),
+    \item \emph{non-empty} (by Step 2).
+  \end{itemize}
+  Since $S$ is connected, $\rho(E^+(P)) = S$. Therefore $S$ is the
+  continuous image of the compact set $E^+(P)$, hence $S$ is compact.
+
+  This contradicts hypothesis~(2). Therefore $\M$ cannot be future
+  null geodesically complete.
+\end{proof}
+
+\begin{remark}
+  The theorem asserts the existence of an incomplete null geodesic,
+  but gives no information about the \emph{nature} of the singularity.
+\end{remark}
+
+\printbibliography
+
+\end{document}
